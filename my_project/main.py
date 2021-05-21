@@ -55,6 +55,7 @@ def get_path():
 
 S = get_path()
 time.sleep(1)
+print(S)
 with open(f"{S}files/data.json") as f:
     data = json.load(f)
 print(data['Test'])

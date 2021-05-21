@@ -2,9 +2,11 @@
     "Test":"T",
     "HOME":{
         "Text.py":{
-            "L1":"x = 0",
-            "L2":"<->",
-            "L3":"print(x)"
+            "L1":"local x = 1",
+            "L2":"while (x <= 3):",
+            "L3":"if x <= 1 do print(x) end",
+            "L4":"if x <= 2 do print(x) end",
+            "L5":"||print(x)"
         },
         "M.py":{
             "L1":"x = 0",
