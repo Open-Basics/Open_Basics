@@ -2,7 +2,8 @@ import sys
 import os
 import json
 import time
-from typing import AbstractSet
+from string import ascii_letters
+from re import search
 
 cls = lambda: os.system('cls')
 cls()
@@ -89,23 +90,27 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
     file.flush()
     
 def start(filename: str, fileextension: str, directory: str):
-    line = data[directory][f'{filename}.{fileextension}']['LINT']
+    
     if directory == "BOOT":
         pass
     elif directory == "HOME":
         if filename in data['HOME']['LS']:
             r = data['HOME'][f"{filename}.{fileextension}"]
             l = len(r)
-            l -= 1
-            if l == data['HOME'][f'{filename}.{fileextension}']['LINT']:
-                for l in data['HOME'][f'{filename}.{fileextension}']:
-                    while l != "LINT":
-                        print(l)
-                        #Content für l aus json nehmen und überprüfen:
-                        break
-                    else:
-                        print(l)
-
+            for l in data['HOME'][f'{filename}.{fileextension}']:
+                time.sleep(1)
+                T = data['HOME'][f'{filename}.{fileextension}'][l]
+                print(T)
+                if search("print", T):
+                    args = T.split("(")
+                    arg = args[1].split(")")
+                    for i in arg:
+                        if i.startswith("'"):
+                            i = i[1:]
+                            if i.endswith("'"):
+                                i = i[:-1]
+                                print(i)
+                
                 
         
 
@@ -123,7 +128,7 @@ def start(filename: str, fileextension: str, directory: str):
 
 def boot():
     for i in progressbar(range(20), "Calculating: ", 50):
-        time.sleep(0.3) # any calculation you need
+        time.sleep(0.3)
     print("Calculation was successful")
     for i in progressbar(range(6), "Installing:  ", 30):
         time.sleep(0.4)
@@ -137,6 +142,9 @@ def boot():
 
 def home():
     C = input("PS Open-Basics/Home> ")
-
+    T = "StackAbuse"
+    V = "tack"
+    if T.find(V) != -1:
+        print("Founded")
 
 start("Test", "ob", "HOME")

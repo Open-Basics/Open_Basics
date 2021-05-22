@@ -7,8 +7,7 @@
         "Test.ob": {
             "L1": "x = 0",
             "L2": "y = 1",
-            "L3": "print(x + y)",
-            "LINT": 3
+            "L3": "print('Test')"
         }
     },
     "BOOT": {
