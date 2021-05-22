@@ -89,26 +89,10 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
     file.write("\n")
     file.flush()
     
-def logic(filename: str, fileextension: str, directory: str, action: str, args=[]):
-    print(args[0])
-
 def start(filename: str, fileextension: str, directory: str):
+    
     if directory == "BOOT":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "HOME":
         if filename in data['HOME']['LS']:
             r = data['HOME'][f"{filename}.{fileextension}"]
@@ -116,6 +100,7 @@ def start(filename: str, fileextension: str, directory: str):
             for l in data['HOME'][f'{filename}.{fileextension}']:
                 time.sleep(1)
                 T = data['HOME'][f'{filename}.{fileextension}'][l]
+                print(T)
                 if search("print", T):
                     args = T.split("(")
                     arg = args[1].split(")")
@@ -124,75 +109,19 @@ def start(filename: str, fileextension: str, directory: str):
                             i = i[1:]
                             if i.endswith("'"):
                                 i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
-                elif search("local", T):
-                    args = T.split(" ")
-                    print(args)
-                    #Argumente überprüfen und an logic senden
+                                print(i)
+                
+                
+        
+
     elif directory == "SYSTEM":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "CONFIG":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "PAPERBIN":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "DATAFILES":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     else:
         return "An Error occured | Directory not Found"
 

@@ -5,8 +5,8 @@
             "Test"
         ],
         "Test.ob": {
-            "L1": "x = 0",
-            "L2": "y = 1",
+            "L1": "local x = 0",
+            "L2": "local y = 1",
             "L3": "print('Test')"
         }
     },
