@@ -4,6 +4,9 @@ import json
 import time
 from typing import AbstractSet
 
+cls = lambda: os.system('cls')
+cls()
+
 def get_path():
     path = os.path.dirname(__file__)
     path = os.path.normpath(path)
@@ -52,11 +55,88 @@ def get_path():
         P = f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{[A[8]]}/"
         T = P.split("/")
         return f"{T[0]}/{T[1]}/{T[2]}/{T[3]}/{T[4]}/{T[5]}/{T[6]}/{T[7]}/"
+    elif len(A) == 10:
+        sys.path.append(f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{A[8]}/{A[9]}/")
+        P = f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{[A[8]]}/{A[9]}/"
+        T = P.split("/")
+        return f"{T[0]}/{T[1]}/{T[2]}/{T[3]}/{T[4]}/{T[5]}/{T[6]}/{T[7]}/{A[8]}/"
+    elif len(A) == 11:
+        sys.path.append(f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{A[8]}/{A[9]}/{A[10]}/")
+        P = f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{[A[8]]}/{A[9]}/{A[10]}/"
+        T = P.split("/")
+        return f"{T[0]}/{T[1]}/{T[2]}/{T[3]}/{T[4]}/{T[5]}/{T[6]}/{T[7]}/{A[8]}{A[9]}/"
+    elif len(A) == 12:
+        sys.path.append(f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{A[8]}/{A[9]}/{A[10]}/{A[11]}/")
+        P = f"{A[0]}/{A[1]}/{A[2]}/{A[3]}/{A[4]}/{A[5]}/{A[6]}/{A[7]}/{[A[8]]}/{A[9]}/{A[10]}/{A[11]}/"
+        T = P.split("/")
+        return f"{T[0]}/{T[1]}/{T[2]}/{T[3]}/{T[4]}/{T[5]}/{T[6]}/{T[7]}/{A[9]}/{A[10]}/"
 
-S = get_path()
-time.sleep(1)
-print(S)
-with open(f"{S}files/data.json") as f:
+PATH = get_path()
+with open(f"{PATH}files/data.json") as f:
     data = json.load(f)
-print(data['Test'])
-time.sleep(180)
+
+def progressbar(it, prefix="", size=60, file=sys.stdout):
+    count = len(it)
+    def show(j):
+        x = int(size*j/count)
+        file.write("%s[%s%s] %i/%i\r" % (prefix, "#"*x, "."*(size-x), j, count))
+        file.flush()        
+    show(0)
+    for i, item in enumerate(it):
+        yield item
+        show(i+1)
+    file.write("\n")
+    file.flush()
+    
+def start(filename: str, fileextension: str, directory: str):
+    line = data[directory][f'{filename}.{fileextension}']['LINT']
+    if directory == "BOOT":
+        pass
+    elif directory == "HOME":
+        if filename in data['HOME']['LS']:
+            r = data['HOME'][f"{filename}.{fileextension}"]
+            l = len(r)
+            l -= 1
+            if l == data['HOME'][f'{filename}.{fileextension}']['LINT']:
+                for l in data['HOME'][f'{filename}.{fileextension}']:
+                    while l != "LINT":
+                        print(l)
+                        #Content für l aus json nehmen und überprüfen:
+                        break
+                    else:
+                        print(l)
+
+                
+        
+
+    elif directory == "SYSTEM":
+        pass
+    elif directory == "CONFIG":
+        pass
+    elif directory == "PAPERBIN":
+        pass
+    elif directory == "DATAFILES":
+        pass
+    else:
+        return "An Error occured | Directory not Found"
+
+
+def boot():
+    for i in progressbar(range(20), "Calculating: ", 50):
+        time.sleep(0.3) # any calculation you need
+    print("Calculation was successful")
+    for i in progressbar(range(6), "Installing:  ", 30):
+        time.sleep(0.4)
+    print("Installation was successful")
+    for i in progressbar(range(30), "Starting:    ", 50):
+        time.sleep(0.7)
+    print("Booting...")
+    time.sleep(2)
+    cls()
+    
+
+def home():
+    C = input("PS Open-Basics/Home> ")
+
+
+start("Test", "ob", "HOME")

@@ -1,29 +1,29 @@
 {
-    "Test":"T",
-    "HOME":{
-        "Text.py":{
-            "L1":"local x = 1",
-            "L2":"while (x <= 3):",
-            "L3":"if x <= 1 do print(x) end",
-            "L4":"if x <= 2 do print(x) end",
-            "L5":"||print(x)"
-        },
-        "M.py":{
-            "L1":"x = 0",
-            "L2":"<->",
-            "L3":"print(x)"
+    "Test": "T",
+    "HOME": {
+        "LS": [
+            "Test"
+        ],
+        "Test.ob": {
+            "L1": "x = 0",
+            "L2": "y = 1",
+            "L3": "print(x + y)",
+            "LINT": 3
         }
     },
-    "BOOT":{
-        "Text.py":{
-            "L1":"x = 0",
-            "L2":"<->",
-            "L3":"print(x)"
-        },
-        "M.py":{
-            "L1":"x = 0",
-            "L2":"<->",
-            "L3":"print(x)"
-        }
+    "BOOT": {
+        "LS": []
+    },
+    "SYSTEM": {
+        "LS": []
+    },
+    "CONFIG": {
+        "LS": []
+    },
+    "PAPERBIN": {
+        "LS": []
+    },
+    "DATAFILES": {
+        "LS": []
     }
 }
