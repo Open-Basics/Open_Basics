@@ -99,7 +99,11 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
     if directory == "BOOT":
         pass
     if action == "start":
-        pass
+        r = []
+        liste = lo[directory]
+        [r.append(liste[i]) for i in range(len(liste))]        
+        print(r)
+        
     elif action == "end":
         home()
     
@@ -178,6 +182,7 @@ def boot():
     print("Booting...")
     time.sleep(2)
     cls()
+    home()
     
 
 def home():
@@ -187,4 +192,4 @@ def home():
     if T.find(V) != -1:
         print("Founded")
 
-start("Test", "ob", "HOME")
+logic("Test", "ob", "HOME", "start", ['JSON'])
