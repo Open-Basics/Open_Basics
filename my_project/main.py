@@ -1,3 +1,4 @@
+import re
 import sys
 import os
 import json
@@ -121,10 +122,6 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
             return
     elif action == "end":
         home()
-    
-def collect_data(filename: str, fileextension: str, directory: str, action: str, args=[]):
-    time.sleep(4)
-
 
 def start(filename: str, fileextension: str, directory: str):
     if directory == "BOOT":
@@ -134,9 +131,7 @@ def start(filename: str, fileextension: str, directory: str):
             r = data['HOME'][f"{filename}.{fileextension}"]
             l = len(r)
             for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
                 T = data['HOME'][f'{filename}.{fileextension}'][l]
-
                 if search("print", T):
                     args = T.split("(")
                     arg = args[1].split(")")
@@ -147,20 +142,11 @@ def start(filename: str, fileextension: str, directory: str):
                                 i = i[:-1]
                                 logic(filename, fileextension, directory, "print", [str(i)])
                         else:
-                            if f"print{i}" not in lo['HOME']:
-                                lo['HOME'].append(f"print{i}")
-                                with open(f"{PATH}files/logic.json", "w+") as l:
-                                    json.dump(lo, l, indent=4)
-                                if "print" in lo['HOME']:
-                                    lo['HOME'].remove("print")
-                                    with open(f"{PATH}files/logic.json", "w+") as l:
-                                        json.dump(lo, l, indent=4)
-                                    if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
-                                        print(data['HOME'][f"{filename}.{fileextension}"][-1])
-                            else:
-                                if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
-                                    print(data['HOME'][f"{filename}.{fileextension}"][-1])
-                if search("local", T):
+                            #Packt alles 2 mal in die Home liste von logic. -> Hier muss wieder die if für den einzelnen print rein:
+                            lo['HOME'].append(f"print{i}")
+                            with open(f"{PATH}files/logic.json", "w+") as l:
+                                json.dump(lo, l, indent=4)
+                elif search("local", T):
                     args = T.split(" ")
                     if len(args) == 4:
                         if args[0] == None:
@@ -171,16 +157,11 @@ def start(filename: str, fileextension: str, directory: str):
                             return
                         if args[3] == None:
                             return
-                        if f"local{args[1]}" not in lo['HOME']:
-                            lo['HOME'].append(f"local{args[1]}")
-                            with open(f"{PATH}files/logic.json", "w+") as l:
-                                json.dump(lo, l, indent=4)
-                            if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
-                                print(data['HOME'][f"{filename}.{fileextension}"][-1])
-                        else:
-                            dict = list(data['HOME'][f"{filename}.{fileextension}"].keys()[-1])
-                            if l == dict:
-                                print(dict)
+                        lo['HOME'].append(f"local{args[1]}")
+                        with open(f"{PATH}files/logic.json", "w+") as l:
+                            json.dump(lo, l, indent=4)
+                if T == "__save":
+                    logic(filename, fileextension, directory, 'start', ['JSON'])
     elif directory == "SYSTEM":
         pass
     elif directory == "CONFIG":

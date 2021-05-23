@@ -3,8 +3,13 @@
     "HOME": [
         "localx",
         "localy",
+        "localz",
         "printTest",
-        "localz"
+        "localx",
+        "localy",
+        "localz",
+        "printTest",
+        "print"
     ],
     "BOOT": [],
     "SYSTEM": [],
