@@ -7,7 +7,7 @@
         "Test.ob": {
             "L1": "local x = 0",
             "L2": "local y = 1",
-            "L3": "print('Test')"
+            "L3": "print(Test)"
         }
     },
     "BOOT": {

@@ -76,6 +76,9 @@ PATH = get_path()
 with open(f"{PATH}files/data.json") as f:
     data = json.load(f)
 
+with open(f"{PATH}files/logic.json", "r+") as l:
+    lo = json.load(l)
+
 def progressbar(it, prefix="", size=60, file=sys.stdout):
     count = len(it)
     def show(j):
@@ -89,26 +92,21 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
     file.write("\n")
     file.flush()
     
+def error(error):
+    pass
+
 def logic(filename: str, fileextension: str, directory: str, action: str, args=[]):
-    print(args[0])
+    if directory == "BOOT":
+        pass
+    if action == "start":
+        pass
+    elif action == "end":
+        home()
+    
 
 def start(filename: str, fileextension: str, directory: str):
     if directory == "BOOT":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "HOME":
         if filename in data['HOME']['LS']:
             r = data['HOME'][f"{filename}.{fileextension}"]
@@ -116,6 +114,7 @@ def start(filename: str, fileextension: str, directory: str):
             for l in data['HOME'][f'{filename}.{fileextension}']:
                 time.sleep(1)
                 T = data['HOME'][f'{filename}.{fileextension}'][l]
+
                 if search("print", T):
                     args = T.split("(")
                     arg = args[1].split(")")
@@ -125,74 +124,44 @@ def start(filename: str, fileextension: str, directory: str):
                             if i.endswith("'"):
                                 i = i[:-1]
                                 logic(filename, fileextension, directory, "print", [str(i)])
-                elif search("local", T):
+                        else:
+                            if f"print{i}" not in lo['HOME']:
+                                lo['HOME'].append(f"print{i}")
+                                with open(f"{PATH}files/logic.json", "w+") as l:
+                                    json.dump(lo, l, indent=4)
+                                if "print" in lo['HOME']:
+                                    lo['HOME'].remove("print")
+                                    with open(f"{PATH}files/logic.json", "w+") as l:
+                                        json.dump(lo, l, indent=4)
+                                    logic(filename, fileextension, directory, "start", ['JSON'])
+                            else:
+                                logic(filename, fileextension, directory, "start", ['JSON'])
+                if search("local", T):
                     args = T.split(" ")
-                    print(args)
-                    #Argumente überprüfen und an logic senden
+                    if len(args) == 4:
+                        if args[0] == None:
+                            return #an error senden
+                        if args[1] == None:
+                            return
+                        if args[2] == None:
+                            return
+                        if args[3] == None:
+                            return
+                        if f"local{args[1]}" not in lo['HOME']:
+                            lo['HOME'].append(f"local{args[1]}")
+                            with open(f"{PATH}files/logic.json", "w+") as l:
+                                json.dump(lo, l, indent=4)
+                            logic(filename, fileextension, directory, "start", ['JSON'])
+                        else:
+                            logic(filename, fileextension, directory, "start", ['JSON'])
     elif directory == "SYSTEM":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "CONFIG":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "PAPERBIN":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     elif directory == "DATAFILES":
-        if filename in data['HOME']['LS']:
-            r = data['HOME'][f"{filename}.{fileextension}"]
-            l = len(r)
-            for l in data['HOME'][f'{filename}.{fileextension}']:
-                time.sleep(1)
-                T = data['HOME'][f'{filename}.{fileextension}'][l]
-                if search("print", T):
-                    args = T.split("(")
-                    arg = args[1].split(")")
-                    for i in arg:
-                        if i.startswith("'"):
-                            i = i[1:]
-                            if i.endswith("'"):
-                                i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+        pass
     else:
         return "An Error occured | Directory not Found"
 

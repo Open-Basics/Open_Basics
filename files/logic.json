@@ -1,0 +1,12 @@
+{
+    "HOME": [
+        "localx",
+        "localy",
+        "printTest"
+    ],
+    "BOOT": [],
+    "SYSTEM": [],
+    "CONFIG": [],
+    "PAPERBIN": [],
+    "DATAFILES": []
+}
