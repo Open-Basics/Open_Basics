@@ -1,8 +1,10 @@
 {
+    "TOGGLE": "OFF",
     "HOME": [
         "localx",
         "localy",
-        "printTest"
+        "printTest",
+        "localz"
     ],
     "BOOT": [],
     "SYSTEM": [],

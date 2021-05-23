@@ -76,7 +76,7 @@ PATH = get_path()
 with open(f"{PATH}files/data.json") as f:
     data = json.load(f)
 
-with open(f"{PATH}files/logic.json", "r+") as l:
+with open(f"{PATH}files/logic.json") as l:
     lo = json.load(l)
 
 def progressbar(it, prefix="", size=60, file=sys.stdout):
@@ -99,14 +99,32 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
     if directory == "BOOT":
         pass
     if action == "start":
-        r = []
-        liste = lo[directory]
-        [r.append(liste[i]) for i in range(len(liste))]        
-        print(r)
-        
+        if lo['TOGGLE'] == "ON":
+            lo['TOGGLE'] = "OFF"
+            with open(f"{PATH}files/logic.json", "w+") as l:
+                json.dump(lo, l, indent=4)
+            r = []
+            liste = lo[directory]
+            for i in range(len(liste)):
+                r.append(liste[i])
+            print(r)
+
+
+
+
+        elif lo['TOGGLE'] == "OFF":
+            lo['TOGGLE'] = "ON"
+            with open(f"{PATH}files/logic.json", "w+") as l:
+                json.dump(lo, l, indent=4)
+            logic(filename, fileextension, directory, action, args)
+        else:
+            return
     elif action == "end":
         home()
     
+def collect_data(filename: str, fileextension: str, directory: str, action: str, args=[]):
+    time.sleep(4)
+
 
 def start(filename: str, fileextension: str, directory: str):
     if directory == "BOOT":
@@ -137,9 +155,11 @@ def start(filename: str, fileextension: str, directory: str):
                                     lo['HOME'].remove("print")
                                     with open(f"{PATH}files/logic.json", "w+") as l:
                                         json.dump(lo, l, indent=4)
-                                    logic(filename, fileextension, directory, "start", ['JSON'])
+                                    if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
+                                        print(data['HOME'][f"{filename}.{fileextension}"][-1])
                             else:
-                                logic(filename, fileextension, directory, "start", ['JSON'])
+                                if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
+                                    print(data['HOME'][f"{filename}.{fileextension}"][-1])
                 if search("local", T):
                     args = T.split(" ")
                     if len(args) == 4:
@@ -155,9 +175,12 @@ def start(filename: str, fileextension: str, directory: str):
                             lo['HOME'].append(f"local{args[1]}")
                             with open(f"{PATH}files/logic.json", "w+") as l:
                                 json.dump(lo, l, indent=4)
-                            logic(filename, fileextension, directory, "start", ['JSON'])
+                            if l == data['HOME'][f"{filename}.{fileextension}"][-1]:
+                                print(data['HOME'][f"{filename}.{fileextension}"][-1])
                         else:
-                            logic(filename, fileextension, directory, "start", ['JSON'])
+                            dict = list(data['HOME'][f"{filename}.{fileextension}"].keys()[-1])
+                            if l == dict:
+                                print(dict)
     elif directory == "SYSTEM":
         pass
     elif directory == "CONFIG":
@@ -192,4 +215,4 @@ def home():
     if T.find(V) != -1:
         print("Founded")
 
-logic("Test", "ob", "HOME", "start", ['JSON'])
+start("Test", "ob", "HOME")
