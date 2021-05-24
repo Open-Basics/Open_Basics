@@ -108,17 +108,31 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
             liste = lo[directory]
             for i in range(len(liste)):
                 r.append(liste[i])
-            if "print" in r:
-                r.remove("print")
+            if "print()" in r:
+                r.remove("print()")
                 lo['HOME'].clear()
                 with open(f"{PATH}files/logic.json", "w+") as l:
                     json.dump(lo, l, indent=4)
-            for i in r:
-                if search("print", i):
-                    for string in r:
-                        if string.startswith('print'):
-                            index = r.index(string)
-                            print(index, string)
+            
+            for string in r:
+                if string.startswith("print"):
+                    index = r.index(string)
+                    args = string.split("(")
+                    if len(args) == 2:
+                        arg2 = args[1].split(")")
+                        if arg2[0].startswith("'"):
+                            arg2[0] = arg2[0][1:]
+                            if arg2[0].endswith("'"):
+                                arg2[0] = arg2[0][:-1]
+                                to_print = arg2[0]
+                                print(to_print)
+                        else:
+                            print(arg2[0])
+                            #Hier das local printen
+                    else:
+                        print(args)
+                        
+            
                 
             
             
@@ -152,11 +166,11 @@ def start(filename: str, fileextension: str, directory: str):
                             i = i[1:]
                             if i.endswith("'"):
                                 i = i[:-1]
-                                lo['HOME'].append(f"print'{i}'")
+                                lo['HOME'].append(f"print('{i}')")
                                 with open(f"{PATH}files/logic.json", "w+") as l:
                                     json.dump(lo, l, indent=4)
                         else:
-                            lo['HOME'].append(f"print{i}")
+                            lo['HOME'].append(f"print({i})")
                             with open(f"{PATH}files/logic.json", "w+") as l:
                                 json.dump(lo, l, indent=4)
                 elif search("local", T):
@@ -170,7 +184,7 @@ def start(filename: str, fileextension: str, directory: str):
                             return
                         if args[3] == None:
                             return
-                        lo['HOME'].append(f"local{args[1]}")
+                        lo['HOME'].append(f"local {args[1]} ({args[3]})")
                         with open(f"{PATH}files/logic.json", "w+") as l:
                             json.dump(lo, l, indent=4)
                 if T == "__save":
