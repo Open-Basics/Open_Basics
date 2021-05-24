@@ -5,10 +5,7 @@
             "Test"
         ],
         "Test.ob": {
-            "L1": "local x = 0",
-            "L2": "local y = 1",
-            "L3": "local z = 2",
-            "L4": "print(Test)",
+            "L1": "print(Hi)",
             "L5": "__save"
         }
     },

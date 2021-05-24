@@ -1,16 +1,6 @@
 {
     "TOGGLE": "OFF",
-    "HOME": [
-        "localx",
-        "localy",
-        "localz",
-        "printTest",
-        "localx",
-        "localy",
-        "localz",
-        "printTest",
-        "print"
-    ],
+    "HOME": [],
     "BOOT": [],
     "SYSTEM": [],
     "CONFIG": [],

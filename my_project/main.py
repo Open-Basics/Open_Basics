@@ -108,8 +108,20 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
             liste = lo[directory]
             for i in range(len(liste)):
                 r.append(liste[i])
-            print(r)
-
+            if "print" in r:
+                r.remove("print")
+                lo['HOME'].clear()
+                with open(f"{PATH}files/logic.json", "w+") as l:
+                    json.dump(lo, l, indent=4)
+            for i in r:
+                if search("print", i):
+                    for string in r:
+                        if string.startswith('print'):
+                            index = r.index(string)
+                            print(index, string)
+                
+            
+            
 
 
 
@@ -140,9 +152,10 @@ def start(filename: str, fileextension: str, directory: str):
                             i = i[1:]
                             if i.endswith("'"):
                                 i = i[:-1]
-                                logic(filename, fileextension, directory, "print", [str(i)])
+                                lo['HOME'].append(f"print'{i}'")
+                                with open(f"{PATH}files/logic.json", "w+") as l:
+                                    json.dump(lo, l, indent=4)
                         else:
-                            #Packt alles 2 mal in die Home liste von logic. -> Hier muss wieder die if für den einzelnen print rein:
                             lo['HOME'].append(f"print{i}")
                             with open(f"{PATH}files/logic.json", "w+") as l:
                                 json.dump(lo, l, indent=4)
