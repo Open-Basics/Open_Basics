@@ -109,15 +109,29 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
             for i in range(len(liste)):
                 r.append(liste[i])
             if "print()" in r:
-                r.remove("print()")
+                for i in range(1000):
+                    if "print()" in r:
+                        r.remove("print()")
                 lo['HOME'].clear()
                 with open(f"{PATH}files/logic.json", "w+") as l:
                     json.dump(lo, l, indent=4)
-            
+            lo['HOME'].clear()
+            with open(f"{PATH}files/logic.json", "w+") as l:
+                json.dump(lo, l, indent=4)
             for string in r:
-                if string.startswith("print"):
+                if string.startswith("local"):
+                    splitted = string.split(" ")
+                    arg = splitted[2].split("(")
+                    arg1 = arg[1].split(")")
+                    zuordnung = splitted[1]
+                    wert = arg1[0]
+                    lo['HOME'].append(f"{zuordnung}={wert}")
+                    with open(f"{PATH}files/logic.json", "w+") as l:
+                        json.dump(lo, l, indent=4)
+                elif string.startswith("print"):
                     index = r.index(string)
                     args = string.split("(")
+                    arg1 = args[1].split(")")
                     if len(args) == 2:
                         arg2 = args[1].split(")")
                         if arg2[0].startswith("'"):
@@ -127,10 +141,27 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                                 to_print = arg2[0]
                                 print(to_print)
                         else:
-                            print(arg2[0])
-                            #Hier das local printen
-                    else:
-                        print(args)
+                            li = []
+                            for i in range(len(lo[directory])):
+                                li.append(lo[directory][i])
+                            for split in li:
+                                sp = split.split("=")
+                                if sp[1].startswith("'"):
+                                    if sp[1].startswith("'"):
+                                        sp[1] = sp[1][1:]
+                                        if sp[1].endswith("'"):
+                                            sp[1] = sp[1][:-1]
+                                            print(sp[1])
+                                            #Ändern: press F5 to see
+                                else:
+                                    #Funktionert gut
+                                    if arg1[0] == sp[0]:
+                                        print(sp[1])
+                            
+                            
+                            
+                                
+
                         
             
                 
@@ -150,6 +181,9 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
         home()
 
 def start(filename: str, fileextension: str, directory: str):
+    lo['HOME'].clear()
+    with open(f"{PATH}files/logic.json", "w+") as l:
+        json.dump(lo, l, indent=4)
     if directory == "BOOT":
         pass
     elif directory == "HOME":
