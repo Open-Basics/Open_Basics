@@ -1,10 +1,6 @@
 {
     "TOGGLE": "OFF",
-    "HOME": [
-        "x='XX'",
-        "y=1",
-        "z='32'"
-    ],
+    "HOME": [],
     "BOOT": [],
     "SYSTEM": [],
     "CONFIG": [],

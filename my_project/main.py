@@ -100,26 +100,22 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
     if directory == "BOOT":
         pass
     if action == "start":
-        if lo['TOGGLE'] == "ON":
-            lo['TOGGLE'] = "OFF"
-            with open(f"{PATH}files/logic.json", "w+") as l:
-                json.dump(lo, l, indent=4)
-            r = []
-            liste = lo[directory]
-            for i in range(len(liste)):
-                r.append(liste[i])
-            if "print()" in r:
-                for i in range(1000):
-                    if "print()" in r:
-                        r.remove("print()")
-                lo['HOME'].clear()
-                with open(f"{PATH}files/logic.json", "w+") as l:
-                    json.dump(lo, l, indent=4)
+        r = []
+        liste = lo[directory]
+        for i in range(len(liste)):
+            r.append(liste[i])
+        if "print()" in r:
+            for i in range(1000):
+                if "print()" in r:
+                    r.remove("print()")
             lo['HOME'].clear()
             with open(f"{PATH}files/logic.json", "w+") as l:
                 json.dump(lo, l, indent=4)
-            for string in r:
-                if string.startswith("local"):
+        lo['HOME'].clear()
+        with open(f"{PATH}files/logic.json", "w+") as l:
+            json.dump(lo, l, indent=4)
+        for string in r:
+            if string.startswith("local"):
                     splitted = string.split(" ")
                     arg = splitted[2].split("(")
                     arg1 = arg[1].split(")")
@@ -128,38 +124,40 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                     lo['HOME'].append(f"{zuordnung}={wert}")
                     with open(f"{PATH}files/logic.json", "w+") as l:
                         json.dump(lo, l, indent=4)
-                elif string.startswith("print"):
-                    index = r.index(string)
-                    args = string.split("(")
-                    arg1 = args[1].split(")")
-                    if len(args) == 2:
-                        arg2 = args[1].split(")")
-                        if arg2[0].startswith("'"):
-                            arg2[0] = arg2[0][1:]
-                            if arg2[0].endswith("'"):
-                                arg2[0] = arg2[0][:-1]
-                                to_print = arg2[0]
-                                print(to_print)
-                        else:
-                            li = []
-                            for i in range(len(lo[directory])):
-                                li.append(lo[directory][i])
-                            for split in li:
-                                sp = split.split("=")
-                                if arg1[0] == sp[0]:
-                                    if sp[1].startswith("'"):
-                                        splite = sp[1].split("'")
-                                        print(splite[1])
-                                    else:
-                                        print(sp[1])
-        elif lo['TOGGLE'] == "OFF":
-            lo['TOGGLE'] = "ON"
-            with open(f"{PATH}files/logic.json", "w+") as l:
-                json.dump(lo, l, indent=4)
-            logic(filename, fileextension, directory, action, args)
-        else:
-            return
+            elif string.startswith("print"):
+                args = string.split("(")
+                arg1 = args[1].split(")")
+                if len(args) == 2:
+                    arg2 = args[1].split(")")
+                    if arg2[0].startswith("'"):
+                        arg2[0] = arg2[0][1:]
+                        if arg2[0].endswith("'"):
+                            arg2[0] = arg2[0][:-1]
+                            to_print = arg2[0]
+                            print(to_print)
+                    else:
+                        li = []
+                        for i in range(len(lo[directory])):
+                            li.append(lo[directory][i])
+                        for split in li:
+                            sp = split.split("=")
+                            if arg1[0] == sp[0]:
+                                if sp[1].startswith("'"):
+                                    splite = sp[1].split("'")
+                                    print(splite[1])
+                                    lo['HOME'].clear()
+                                    with open(f"{PATH}files/logic.json", "w+") as l:
+                                        json.dump(lo, l, indent=4)
+                                else:
+                                    print(sp[1])
+                                    lo['HOME'].clear()
+                                    with open(f"{PATH}files/logic.json", "w+") as l:
+                                        json.dump(lo, l, indent=4)
+        logic(filename, fileextension, directory, "end", ['JSON'])           
     elif action == "end":
+        lo['HOME'].clear()
+        with open(f"{PATH}files/logic.json", "w+") as l:
+            json.dump(lo, l, indent=4)
         home()
 
 def start(filename: str, fileextension: str, directory: str):
@@ -234,9 +232,10 @@ def boot():
 
 def home():
     C = input("PS Open-Basics/Home> ")
-    T = "StackAbuse"
-    V = "tack"
-    if T.find(V) != -1:
-        print("Founded")
+    if C == "start":
+        print(lo, data)
+        time.sleep(5)
+        start("Test", "ob", "HOME")
+
 
 start("Test", "ob", "HOME")
