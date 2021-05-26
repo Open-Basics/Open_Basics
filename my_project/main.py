@@ -146,30 +146,12 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                                 li.append(lo[directory][i])
                             for split in li:
                                 sp = split.split("=")
-                                if sp[1].startswith("'"):
+                                if arg1[0] == sp[0]:
                                     if sp[1].startswith("'"):
-                                        sp[1] = sp[1][1:]
-                                        if sp[1].endswith("'"):
-                                            sp[1] = sp[1][:-1]
-                                            print(sp[1])
-                                            #Ändern: press F5 to see
-                                else:
-                                    #Funktionert gut
-                                    if arg1[0] == sp[0]:
+                                        splite = sp[1].split("'")
+                                        print(splite[1])
+                                    else:
                                         print(sp[1])
-                            
-                            
-                            
-                                
-
-                        
-            
-                
-            
-            
-
-
-
         elif lo['TOGGLE'] == "OFF":
             lo['TOGGLE'] = "ON"
             with open(f"{PATH}files/logic.json", "w+") as l:

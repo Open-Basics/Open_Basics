@@ -5,12 +5,12 @@
             "Test"
         ],
         "Test.ob": {
-            "L1": "local x = 0",
+            "L1": "local x = 'XX'",
             "L2": "local y = 1",
             "L3": "local z = '32'",
-            "L4": "print(x)",
-            "L5": "print(y)",
-            "L6": "print(z)",
+            "L4": "print(y)",
+            "L5": "print(z)",
+            "L6": "print(x)",
             "L7": "print('Test')",
             "L8": "print('My Name is Jeff')",
             "L9": "__save"
