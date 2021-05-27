@@ -8,7 +8,7 @@ from re import search
 
 def backup_copy():
     os.startfile(f"{PATH}docs/copy.bat") #Vorerst eine Kopie von Open_Basics zu E:/Developer_07/Copies/<DATUM><ZEIT>. Muss noch wenn es fertig ist gelöscht werden
-    boot() #-> muss zu boot() geändert werden
+    home() #-> muss zu boot() geändert werden
 
 cls = lambda: os.system('cls')
 cls()
@@ -151,6 +151,10 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                                     print(splite[1])
                                 else:
                                     print(sp[1])
+            elif string.startswith("if"):
+                args = string.split(" ")
+                print(args)
+                        
         logic(filename, fileextension, directory, "end", ['JSON'])           
     elif action == "end":
         lo['HOME'].clear()
@@ -199,6 +203,19 @@ def start(filename: str, fileextension: str, directory: str):
                         lo['HOME'].append(f"local {args[1]} ({args[3]})")
                         with open(f"{PATH}files/logic.json", "w+") as l:
                             json.dump(lo, l, indent=4)
+                elif search("if", T):
+                    args = T.split(" ")
+                    arg1 = args[1].split("(")
+                    arg2 = args[2]
+                    arg3 = args[3].split(")")
+                    
+                    if len(args) == 4:
+                        if arg2.startswith("="):
+                            argModus = arg2
+                            lo['HOME'].append(f"if ({arg1[1]} {arg3[0]}) [{argModus}]")
+                            with open(f"{PATH}files/logic.json", "w+") as l:
+                                json.dump(lo, l, indent=4)
+                            #-> In logic verarbeiten!!!!( IF ABFRAGEN )
                 if T == "__save":
                     logic(filename, fileextension, directory, 'start', ['JSON'])
     elif directory == "SYSTEM":
