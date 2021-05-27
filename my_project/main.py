@@ -6,6 +6,10 @@ import time
 from string import ascii_letters
 from re import search
 
+def backup_copy():
+    os.startfile(f"{PATH}docs/copy.bat") #Vorerst eine Kopie von Open_Basics zu E:/Developer_07/Copies/<DATUM><ZEIT>. Muss noch wenn es fertig ist gelöscht werden
+    boot() #-> muss zu boot() geändert werden
+
 cls = lambda: os.system('cls')
 cls()
 
@@ -145,14 +149,8 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                                 if sp[1].startswith("'"):
                                     splite = sp[1].split("'")
                                     print(splite[1])
-                                    lo['HOME'].clear()
-                                    with open(f"{PATH}files/logic.json", "w+") as l:
-                                        json.dump(lo, l, indent=4)
                                 else:
                                     print(sp[1])
-                                    lo['HOME'].clear()
-                                    with open(f"{PATH}files/logic.json", "w+") as l:
-                                        json.dump(lo, l, indent=4)
         logic(filename, fileextension, directory, "end", ['JSON'])           
     elif action == "end":
         lo['HOME'].clear()
@@ -215,6 +213,7 @@ def start(filename: str, fileextension: str, directory: str):
         return "An Error occured | Directory not Found"
 
 
+
 def boot():
     for i in progressbar(range(20), "Calculating: ", 50):
         time.sleep(0.3)
@@ -233,9 +232,10 @@ def boot():
 def home():
     C = input("PS Open-Basics/Home> ")
     if C == "start":
-        print(lo, data)
-        time.sleep(5)
         start("Test", "ob", "HOME")
+    else:
+        print("")
+        home()
 
 
-start("Test", "ob", "HOME")
+backup_copy()
