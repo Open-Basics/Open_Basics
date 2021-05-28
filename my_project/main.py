@@ -153,8 +153,36 @@ def logic(filename: str, fileextension: str, directory: str, action: str, args=[
                                     print(sp[1])
             elif string.startswith("if"):
                 args = string.split(" ")
-                print(args)
-                        
+                arg1 = args[1].split("(")[1]
+                arg2 = args[2].split(")")[0]
+                arg3 = args[3].split("[")[1]
+                argModus = arg3.split("]")[0]
+                arg4 = lo[directory]
+                arg5 = args[4].split("||")[1]
+                for argument in arg4:
+                    s = argument.split("=")
+                    sType = s[1]
+                    sNull = s[0]
+                    global sInt
+                    sInt = 0
+                    if arg1 == sNull:
+                        if argModus == "==":
+                            #vergleichen
+                            if arg2 == sType:
+                                if argument == arg5:  
+                                    if sInt == 0:
+                                        if string == "__do":
+                                            sInt += 1
+                                            #Do and End
+                        elif argModus == "<=":
+                            #kleiner oder gleich
+                            pass
+                        elif argModus == ">=":
+                            #größer oder gleich
+                            pass
+                        else:
+                            #error syntax
+                            pass
         logic(filename, fileextension, directory, "end", ['JSON'])           
     elif action == "end":
         lo['HOME'].clear()
@@ -212,12 +240,22 @@ def start(filename: str, fileextension: str, directory: str):
                     if len(args) == 4:
                         if arg2.startswith("="):
                             argModus = arg2
-                            lo['HOME'].append(f"if ({arg1[1]} {arg3[0]}) [{argModus}]")
+                            lo['HOME'].append(f"if ({arg1[1]} {arg3[0]}) [{argModus}] ||{arg3[1]}")
                             with open(f"{PATH}files/logic.json", "w+") as l:
                                 json.dump(lo, l, indent=4)
-                            #-> In logic verarbeiten!!!!( IF ABFRAGEN )
-                if T == "__save":
+
+                if T == "__do":
+                    lo['HOME'].append("__do")
+                    with open(f"{PATH}files/logic.json", "w+") as l:
+                        json.dump(lo, l, indent=4)
+                elif T == "__end":
+                    lo['HOME'].append("__end")
+                    with open(f"{PATH}files/logic.json", "w+") as l:
+                            json.dump(lo, l, indent=4)
+                elif T == "__save":
                     logic(filename, fileextension, directory, 'start', ['JSON'])
+                
+                
     elif directory == "SYSTEM":
         pass
     elif directory == "CONFIG":

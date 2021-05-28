@@ -14,7 +14,10 @@
             "L7": "print('Test')",
             "L8": "print('My Name is Jeff')",
             "L9": "if (z == '32'):",
-            "L10": "__save"
+            "L10": "__do",
+            "L11": "print('Hi')",
+            "L12": "__end",
+            "L13": "__save"
         }
     },
     "BOOT": {
